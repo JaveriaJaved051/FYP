@@ -25,7 +25,7 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # Expose the correct port
-# EXPOSE 8000
+EXPOSE 8000
 
 # Run your FastAPI app correctly
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
