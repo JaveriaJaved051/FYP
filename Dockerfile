@@ -1,29 +1,31 @@
+# Start from Python base image
 FROM python:3.10-slim
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
-# Install system dependencies (added git here)
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
+    git \
     ffmpeg \
     libsndfile1 \
-    git \
+    libsm6 \
+    libxext6 \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Create app directory
+# Set working directory
 WORKDIR /app
 
-# Install Python dependencies
+# Copy requirements first (to cache dependencies)
 COPY requirements.txt .
+
+# Upgrade pip and install requirements
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # Copy app code
 COPY . .
 
-# Expose port
+# Expose port (Railway or Hugging Face will auto-set)
 EXPOSE 7860
 
-# Run FastAPI with uvicorn
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "7860"]
+# Run your FastAPI app
+CMD ["python", "app.py"]
