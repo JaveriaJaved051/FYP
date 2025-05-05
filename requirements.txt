@@ -17,7 +17,7 @@ requests==2.28.2
 torch==2.0.1
 torchaudio==2.0.2
 transformers==4.28.1
-TTS @ git+https://github.com/coqui-ai/TTS.git@v0.11.1
+TTS==0.11.1
 
 # Extra utils
 scikit-learn==1.2.2
